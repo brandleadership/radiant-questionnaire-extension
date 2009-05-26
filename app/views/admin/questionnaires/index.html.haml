@@ -1,0 +1,29 @@
+%h1 Questionnaires
+
+- render_region :top do |top|
+  - top.help_text do
+    %p Questionnaire are ...
+
+%table#snippets.index{:cellspacing=>"0", :border=>"0", :cellpadding=>"0"}
+  %thead
+    %tr
+      - render_region :thead do |thead|
+        - thead.title_header do
+          %th.snippet Questionnaire
+        - thead.modify_header do
+          %th.modify Modify
+  %tbody
+    - @questionnaires.each do |questionnaire|
+      %tr.node.level-1
+        - render_region :tbody do |tbody|
+          - tbody.title_cell do
+            %td.snippet
+              %span= link_to questionnaire.questionnaire_contents.first.title, edit_admin_questionnaire_url(questionnaire)
+          - tbody.modify_cell do
+            %td.remove
+              = link_to image('remove', :alt => 'Remove Questionnaire'), remove_admin_questionnaire_url(questionnaire)
+
+- render_region :bottom do |bottom|
+  - bottom.new_button do
+    %p
+      = link_to image('new-questionnaire', :alt => 'New Questionnaire'), new_admin_questionnaire_url

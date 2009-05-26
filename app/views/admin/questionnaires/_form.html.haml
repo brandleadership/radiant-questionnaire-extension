@@ -1,0 +1,36 @@
+= calendar_date_select_includes "red"
+- form_for [:admin, @questionnaire] do |f|
+  = render_region :form_top
+  .form-area
+    - render_region :form do |form|
+      - form.edit_title do
+        %p.title
+          hallo
+      - form.edit_content do
+        %p.content
+          %label Startdate
+          = calendar_date_select :questionnaire, :startdate
+        %p.content
+          %label Enddate
+          = calendar_date_select :questionnaire, :enddate
+        %p.content
+          %label Anonymous
+          = check_box_tag :questionnaire, :anonymous
+        - fields_for "questionnaire[questionnaire_contents_attributes][]", @questionnaire.questionnaire_contents.first do |child_form|
+          %p.content
+            %label Title
+            = child_form.text_field :title, :maxlength => 255
+          %p.content
+            %label Description
+            = child_form.text_area :description
+          %p.content
+            %label Language
+            = child_form.text_field :language, :maxlength => 2
+
+  - render_region :form_bottom do |form_bottom|
+    - form_bottom.edit_buttons do
+      %p.buttons
+        = save_model_button(@questionnaire)
+        = save_model_and_continue_editing_button(@questionnaire)
+        or
+        = link_to 'Cancel', admin_questionnaires_url

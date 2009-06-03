@@ -1,0 +1,1 @@
+var newQuestionCounter = 0;

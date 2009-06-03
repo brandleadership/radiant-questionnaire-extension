@@ -1,11 +1,11 @@
-= calendar_date_select_includes "red"
+= calendar_date_select_includes "blue"
 = javascript_include_tag("questionnaire")
 - form_for [:admin, @questionnaire] do |f|
   = render_region :form_top
-  .form-area
+  .questionnaire-form-area
     - render_region :form do |form|
       - form.edit_title do
-        %p.title
+        %h2.title
           = @questionnaire.questionnaire_contents.first.title
       - form.edit_content do
         %p.content
@@ -24,7 +24,7 @@
         - fields_for "questionnaire[questionnaire_contents_attributes][]", q_content do |child_form|
           - unless q_content.new_record?
             = child_form.hidden_field :id, :index => nil
-          %p.content
+          %p{:class=>'content title'}
             %label Title
             = child_form.text_field :title, :maxlength => 255, :index => nil
           %p.content
@@ -34,16 +34,17 @@
             %label Language
             = child_form.text_field :language, :maxlength => 2, :index => nil
           %p.content
-            %label Questions
+            %h2 Questions
             #questions
               = render :partial => 'question', :collection => q_content.questionnaire_questions, :locals => { :qc_id => q_content.id }
-              = link_to_function "Add Question" do |page|
-                - page.insert_html :bottom, :questions, :partial => 'question', :object => QuestionnaireQuestion.new, :locals => { :qc_id => q_content.id }
-                - page << "newQuestion = $('questions').childElements().last().childElements().last();"
-                - page << "if( $('answers-new-0') != null) { $('answers-new-0').id = 'answer-' + newQuestionCounter;"
-                - page << "newQuestion.writeAttribute('onClick',newQuestion.readAttribute('onClick').sub('answers-new-0', 'answer-' + newQuestionCounter));"
-                - page << "$('questions').childElements().last().childElements().first().childElements()[1].writeAttribute('value', newQuestionCounter);"
-                - page << "newQuestionCounter++ }"
+              #add-question
+                = link_to_function "Add Question" do |page|
+                  - page.insert_html :bottom, :questions, :partial => 'question', :object => QuestionnaireQuestion.new, :locals => { :qc_id => q_content.id }
+                  - page << "newQuestion = $('questions').childElements().last().childElements().last().childElements().last();"
+                  - page << "if( $('answers-new-0') != null) { $('answers-new-0').id = 'answer-' + newQuestionCounter;"
+                  - page << "newQuestion.writeAttribute('onClick',newQuestion.readAttribute('onClick').sub('answers-new-0', 'answer-' + newQuestionCounter));"
+                  - page << "$('questions').childElements().last().childElements().first().childElements()[1].writeAttribute('value', newQuestionCounter);"
+                  - page << "newQuestionCounter++ }"
   - render_region :form_bottom do |form_bottom|
     - form_bottom.edit_buttons do
       %p.buttons

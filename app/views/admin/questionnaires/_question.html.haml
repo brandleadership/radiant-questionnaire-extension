@@ -1,4 +1,3 @@
-- answerCounter = 0
 - fields_for "questionnaire[questionnaire_questions_attributes][]", question do |question_child_form|
   .question
     %p.content
@@ -6,15 +5,14 @@
       = question_child_form.hidden_field :new_data_id, :index => nil
       %label Question
       - if question.new_record?
-        - answer_div_id = 'answers-new-' + answerCounter.to_s
-        - answerCounter = answerCounter + 1
+        - answer_div_id = 'answers-new-0'
       -else
         = question_child_form.hidden_field :id, :index => nil
         - answer_div_id = 'answers-' + question.id.to_s
       = question_child_form.text_area :question, :index => nil
-      = question_child_form.select :questionnaire_question_type_id, QuestionnaireQuestionType.find(:all).collect{|g| [g.name, g.id]}.unshift(['None', nil]), {}, { :index => nil }
+      = question_child_form.select :questionnaire_question_type_id, QuestionnaireQuestionType.find(:all).collect{|g| [g.name, g.id]}.unshift(['None', nil]), {}, { :index => nil, :onchange => "if(this.value == '2' || this.value == '3'){ alert('show'); }else{ alert('remove'); }" }
       %div{:id => answer_div_id}
-      = render :partial => 'answer', :collection => question.questionnaire_answers, :locals => { :qq_id => question.id }
-      = link_to_function "Add Answer" do |page|
-        - page.insert_html :bottom, answer_div_id, :partial => 'answer', :object => question.questionnaire_answers.build, :locals => { :qq_id => question.id }
-        - page << "$$('.new-data').each( function(s) { s.writeAttribute('value', s.up().up().up().childElements()[0].childElements()[1].readAttribute('value')); });"
+        = render :partial => 'answer', :collection => question.questionnaire_answers, :locals => { :qq_id => question.id }
+        = link_to_function "Add Answer" do |page|
+          - page.insert_html :bottom, answer_div_id, :partial => 'answer', :object => question.questionnaire_answers.build, :locals => { :qq_id => question.id }
+          - page << "$$('.new-data').each( function(s) { s.writeAttribute('value', s.up().up().up().childElements()[0].childElements()[1].readAttribute('value')); });"

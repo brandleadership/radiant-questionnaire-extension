@@ -1,0 +1,53 @@
+.questionnaire-form-area p.content label {
+  float: left;
+}
+
+.questionnaire-form-area p.content label,
+.questionnaire-form-area p.title input {
+  display: block;
+}
+
+.questionnaire-form-area p.content label {
+  width: 200px;
+}
+
+.questionnaire-form-area p.title input,
+.questionnaire-form-area p.content textarea {
+  width: 260px;
+}
+
+.questionnaire-form-area p.content textarea {
+  height: 50px;
+}
+
+.question p.content select {
+  position: relative;
+  top: -35px;
+  left: 0px;
+}
+
+.question a {
+  background-image:url(/images/admin/add-question.png);
+  background-position:left top;
+  background-repeat:no-repeat;
+  color:black;
+  display:none;
+  font-size:12px;
+  height:20px;
+  line-height:20px;
+  padding-left:15px;
+  text-decoration:none;
+}
+
+#add-question a {
+  background-image:url(/images/admin/add-new-question.png);
+  background-position:left top;
+  background-repeat:no-repeat;
+  color:black;
+  display:block;
+  font-size:12px;
+  height:31px;
+  line-height:31px;
+  padding-left:30px;
+  text-decoration:none;
+}

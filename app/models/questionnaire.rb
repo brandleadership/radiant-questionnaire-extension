@@ -7,8 +7,6 @@ class Questionnaire < ActiveRecord::Base
     questionnaire_contents_attributes.each do |attributes|
       if attributes[:id].blank?
         content = questionnaire_contents.build(attributes)
-
-        #todo: check if next line is necessary
         content.save()
         @new_content_id = content.id
       else

@@ -10,10 +10,12 @@ class QuestionnaireExtension < Radiant::Extension
      map.namespace :admin, :member => { :remove => :get } do |admin|
        admin.resources :questionnaires
      end
+
+     map.connect 'questionnaire_results', :controller => 'questionnaire_results', :action => 'create'
    end
   
   def activate
-    admin.tabs.add "Questionnaire", "/admin/questionnaires", :after => "Layouts", :visibility => [:all]
+    admin.tabs.add 'Questionnaire', '/admin/questionnaires', :after => 'Layouts', :visibility => [:all]
 
     Radiant::AdminUI.send :include, QuestionnaireAdminUI unless defined? admin.questionnaire # UI is a singleton and already loaded
     admin.questionnaires = Radiant::AdminUI.load_default_questionnaire_regions

@@ -17,6 +17,8 @@ class QuestionnaireExtension < Radiant::Extension
 
     Radiant::AdminUI.send :include, QuestionnaireAdminUI unless defined? admin.questionnaire # UI is a singleton and already loaded
     admin.questionnaires = Radiant::AdminUI.load_default_questionnaire_regions
+
+    Page.send :include,  QuestionnaireTags
   end
   
   def deactivate

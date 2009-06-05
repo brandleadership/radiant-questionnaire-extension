@@ -6,7 +6,11 @@ class QuestionnaireResults < ActiveRecord::Base
 
   def questionnaire_result_entries_attributes=(questionnaire_result_entries_attributes)
     questionnaire_result_entries_attributes.each do |attributes|
-      questionnaire_result_entries.build(attributes)
+      if (!attributes[:questionnaire_answer_id].blank? or
+              !attributes[:freetext_answer].blank? or 
+              !attributes[:rating_answer].blank?)
+        questionnaire_result_entries.build(attributes)
+      end 
     end
   end
 

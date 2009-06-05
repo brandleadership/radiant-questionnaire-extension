@@ -61,19 +61,23 @@ module QuestionnaireTags
     html = ''
 
     element_name = "questionnaire_results[questionnaire_result_entries_attributes]"
-    html += content_tag(:input, nil, :value => question.id.to_s, :name => element_name + '[][questionnaire_question_id]', :type => 'hidden')
+    question_id = content_tag(:input, nil, :value => question.id.to_s, :name => element_name + '[][questionnaire_question_id]', :type => 'hidden')
     case question.questionnaire_question_type.name
       when 'Multiple-answer'
         answers.each do |answer|
+          html += question_id
           html += content_tag(:input, answer.answer, :value => answer.id.to_s, :name => element_name + '[][questionnaire_answer_id]', :type => 'checkbox')
         end
       when 'Single-answer'
         answers.each do |answer|
+          html += question_id
           html += content_tag(:input, answer.answer, :value => answer.id.to_s, :name => element_name + '[][questionnaire_answer_id]', :type => 'radio')
         end
       when 'Freetext'
+        html += question_id
         html += content_tag(:input, nil, :name => element_name + '[][freetext_answer]')
       when 'Rating'
+        html += question_id
         (1..5).each do |counter|
           html += content_tag(:input, counter, :value => counter, :name => element_name + '[][rating_answer]', :type => 'radio')
         end 

@@ -45,7 +45,7 @@
                   - page << "newQuestion.writeAttribute('onClick',newQuestion.readAttribute('onClick').sub('answers-new-0', 'answer-' + newQuestionCounter));"
                   - page << "$('questions').childElements().last().childElements().first().childElements()[1].writeAttribute('value', newQuestionCounter);"
                   - page << "newQuestionCounter++;"
-                  - page << "var addQuestion = $('add-question'); $('add-question').remove(); $('questions').childElements().last().insert(addQuestion); }"
+                  - page << "var addQuestion = $('add-question'); $('add-question').remove(); $('questions').insert(addQuestion); }"
   - render_region :form_bottom do |form_bottom|
     - form_bottom.edit_buttons do
       %p.buttons

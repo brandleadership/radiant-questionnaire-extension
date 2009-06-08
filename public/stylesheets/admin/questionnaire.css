@@ -37,6 +37,8 @@
   line-height:20px;
   padding-left:15px;
   text-decoration:none;
+  margin-bottom: 10px;
+  margin-left: 200px;
 }
 
 .question a.show {
@@ -54,4 +56,27 @@
   line-height:31px;
   padding-left:30px;
   text-decoration:none;
+  margin-top: 15px;
+  margin-left: 200px;
+}
+
+.questionnaire-form-area h2 {
+  background-color:#F5F5F5;
+  font-weight: bold;
+  padding:2px 4px;
+}
+
+.questionnaire-form-area #questions .question {
+  border-bottom:1px solid #EAEAEA;
+  margin: 0;
+  padding: 0;
+}
+
+.questionnaire-form-area #questions .question div {
+  border-top: 1px solid #f5f5f5;
+}
+
+.questionnaire-form-area p.content label.answer {
+  margin-left: 15px;
+  width: 185px;
 }

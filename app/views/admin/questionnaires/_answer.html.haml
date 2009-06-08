@@ -6,3 +6,5 @@
     - unless answer.new_record?
       = answer_child_form.hidden_field :id, :index => nil
     = answer_child_form.text_area :answer, :index => nil
+    = link_to_function "Remove Answer" do |page|
+      - page << "$(this).up('p.content').remove();"

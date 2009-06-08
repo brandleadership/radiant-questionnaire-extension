@@ -39,6 +39,10 @@
   text-decoration:none;
 }
 
+.question a.show {
+  display: block;
+}
+
 #add-question a {
   background-image:url(/images/admin/add-new-question.png);
   background-position:left top;

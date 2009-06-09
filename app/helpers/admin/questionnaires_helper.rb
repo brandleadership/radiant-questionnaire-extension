@@ -7,7 +7,24 @@ module Admin::QuestionnairesHelper
       xml.Cell { xml.Data 'Email', 'ss:Type' => 'String' }
 
       questions.each do |question|
-        xml.Cell { xml.Data question.question, 'ss:Type' => 'String'} #, 'ss:MergeAcross' => '1' 
+        xml.Cell { xml.Data question.question, 'ss:Type' => 'String'} #, 'ss:MergeAcross' => '1'
+
+        #add empthy cells
+        case question.questionnaire_question_type.name
+          when 'Multiple-answer'
+            (question.questionnaire_answers.length - 1).times do
+              xml.Cell{ xml.Data '', 'ss:Type' => 'String' }
+            end
+          when 'Single-answer'
+            (question.questionnaire_answers.length - 1).times do
+              xml.Cell{ xml.Data '', 'ss:Type' => 'String' }
+            end
+          when 'Rating'
+            (1..3).each do |counter|
+              xml.Cell{ xml.Data '', 'ss:Type' => 'String' }
+            end
+        end
+
       end
     end
     xml.Row do
@@ -21,8 +38,8 @@ module Admin::QuestionnairesHelper
           when 'Freetext'
             xml.Cell { xml.Data '', 'ss:Type' => 'String' }
           when 'Rating'
-            (1..5).each do |counter|
-              xml.Cell { xml.Data counter, 'ss:Type' => 'Number' }
+            (1..4).each do |counter|
+              xml.Cell{ xml.Data counter, 'ss:Type' => 'Number' }
             end
           else
             question.questionnaire_answers.each do |answer|
@@ -59,7 +76,6 @@ module Admin::QuestionnairesHelper
                 end
               else
                 question.questionnaire_answers.each do |answer|
-                  #logger.info('logging 1: ' + entries.length.to_s)
                   has_result = false
                   entries.each do |entry|
                     if entry.questionnaire_answer_id == answer.id

@@ -1,5 +1,9 @@
 = calendar_date_select_includes "blue"
 = javascript_include_tag("questionnaire")
+-if @questionnaire.new_record?
+  - q_content = @questionnaire.questionnaire_contents.first
+-else
+  - q_content = @questionnaire.questionnaire_contents.find_by_language(params[:language])
 - form_for [:admin, @questionnaire] do |f|
   = render_region :form_top
   .questionnaire-form-area
@@ -17,10 +21,6 @@
         %p.content
           %label Anonymous
           = check_box_tag :questionnaire, :anonymous
-        -if @questionnaire.new_record?
-          - q_content = @questionnaire.questionnaire_contents.first
-        -else
-          - q_content = @questionnaire.questionnaire_contents.find_by_language(params[:language])
         - fields_for "questionnaire[questionnaire_contents_attributes][]", q_content do |child_form|
           - unless q_content.new_record?
             = child_form.hidden_field :id, :index => nil
@@ -50,6 +50,5 @@
     - form_bottom.edit_buttons do
       %p.buttons
         = save_model_button(@questionnaire)
-        = save_model_and_continue_editing_button(@questionnaire)
         or
         = link_to 'Cancel', admin_questionnaires_url

@@ -1,9 +1,5 @@
 %h1 Questionnaires
 
-- render_region :top do |top|
-  - top.help_text do
-    %p Questionnaire are ...
-
 %table#questionnaires.index{:cellspacing=>"0", :border=>"0", :cellpadding=>"0"}
   %thead
     %tr
@@ -12,6 +8,8 @@
           %th.snippet Questionnaire
         - thead.language_header do
           %th.snippet Languages
+        - thead.export_header do
+          %th.snippet Export
         - thead.modify_header do
           %th.modify Modify
   %tbody
@@ -20,12 +18,14 @@
         - render_region :tbody do |tbody|
           - tbody.title_cell do
             %td.snippet
-              %span= link_to questionnaire.questionnaire_contents.first.title, edit_admin_questionnaire_url(questionnaire)
+              %span= link_to questionnaire.questionnaire_contents.first.title, edit_admin_questionnaire_url(questionnaire, :language =>  questionnaire.questionnaire_contents.first.language)
           - tbody.language_cell do
             %td.snippet
               - questionnaire.questionnaire_contents.each do |content|
                 %span= link_to content.language, edit_admin_questionnaire_url(questionnaire.id, :language => content.language)
-              = link_to 'Export As Excel', edit_admin_questionnaire_url(questionnaire, :format => :xls) #%(/admin/questionnaires/export/#{questionnaire.id.to_s}?format=xls)
+          - tbody.export_cell do
+            %td.snippet
+              = link_to 'Excel', edit_admin_questionnaire_url(questionnaire, :format => :xls)
           - tbody.modify_cell do
             %td.remove
               = link_to image('remove', :alt => 'Remove Questionnaire'), remove_admin_questionnaire_url(questionnaire)

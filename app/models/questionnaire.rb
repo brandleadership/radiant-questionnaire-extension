@@ -1,5 +1,6 @@
 class Questionnaire < ActiveRecord::Base
-  has_many :questionnaire_contents 
+  has_many :questionnaire_contents
+  has_many :questionnaire_results
   after_update :save_questionnaire_contents
 
 
@@ -60,5 +61,4 @@ class Questionnaire < ActiveRecord::Base
       q.save(false)
     end
   end
-
 end

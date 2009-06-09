@@ -9,6 +9,7 @@ class QuestionnaireExtension < Radiant::Extension
    define_routes do |map|
      map.namespace :admin, :member => { :remove => :get } do |admin|
        admin.resources :questionnaires
+       admin.connect '/questionnaires/export/:id', :controller => 'questionnaires', :action => 'export'
      end
 
      map.connect 'questionnaire_results', :controller => 'questionnaire_results', :action => 'create'

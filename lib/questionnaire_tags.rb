@@ -1,8 +1,6 @@
 module QuestionnaireTags
   include Radiant::Taggable
 
-  radio_group = 0
-
   tag 'questionnaire' do |tag|
     unless tag.attr['title'].blank?
       tag.locals.questionnaire_content = QuestionnaireContent.find_by_title(tag.attr['title'])
@@ -15,6 +13,7 @@ module QuestionnaireTags
     results = []
     action =  "/questionnaire_results"
     results << %(<form action="#{action}" method="post">)
+    results << content_tag(:input, nil, :value => tag.locals.questionnaire.id.to_s, :name => 'questionnaire_results[questionnaire_id]', :type => 'hidden')
     results << tag.expand
     results << %(<input type="submit">)
     results << "</form>"
@@ -78,7 +77,7 @@ module QuestionnaireTags
         html += content_tag(:input, nil, :name => element_name + '[][freetext_answer]')
       when 'Rating'
         html += question_id
-        (1..5).each do |counter|
+        (1..4).each do |counter|
           html += content_tag(:input, counter, :value => counter, :name => element_name + '[][rating_answer]', :type => 'radio')
         end 
     end

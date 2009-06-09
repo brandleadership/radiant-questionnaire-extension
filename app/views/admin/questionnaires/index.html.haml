@@ -24,7 +24,8 @@
           - tbody.language_cell do
             %td.snippet
               - questionnaire.questionnaire_contents.each do |content|
-                %span= link_to content.language, edit_admin_questionnaire_url(questionnaire.id, :language => content.language)          
+                %span= link_to content.language, edit_admin_questionnaire_url(questionnaire.id, :language => content.language)
+              = link_to 'Export As Excel', edit_admin_questionnaire_url(questionnaire, :format => :xls) #%(/admin/questionnaires/export/#{questionnaire.id.to_s}?format=xls)
           - tbody.modify_cell do
             %td.remove
               = link_to image('remove', :alt => 'Remove Questionnaire'), remove_admin_questionnaire_url(questionnaire)

@@ -12,10 +12,10 @@ module QuestionnaireTags
   tag 'questionnaire:form' do |tag|
     results = []
     action =  "/questionnaire_results"
-    results << %(<form action="#{action}" method="post">)
+    results << %(<form id="questionnaire-form" action="#{action}" method="post">)
     results << content_tag(:input, nil, :value => tag.locals.questionnaire.id.to_s, :name => 'questionnaire_results[questionnaire_id]', :type => 'hidden')
     results << tag.expand
-    results << %(<input type="submit">)
+    results << %(<div id="questionnaire-submit"><input type="submit"></div>)
     results << "</form>"
   end
 
@@ -24,15 +24,15 @@ module QuestionnaireTags
   end
 
   tag 'questionnaire:results:firstname' do |tag|
-    content_tag(:input, nil, :name => 'questionnaire_results[firstname]', :type => 'text', :size => 255)
+    content_tag(:input, nil, :id => 'questionnaire_results[firstname]', :name => 'questionnaire_results[firstname]', :type => 'text', :size => 255)
   end
 
   tag 'questionnaire:results:lastname' do |tag|
-    content_tag(:input, nil, :name => 'questionnaire_results[lastname]', :type => 'text', :size => 255)
+    content_tag(:input, nil, :id => 'questionnaire_results[lastname]', :name => 'questionnaire_results[lastname]', :type => 'text', :size => 255)
   end
 
   tag 'questionnaire:results:email' do |tag|
-    content_tag(:input, nil, :name => 'questionnaire_results[email]', :type => 'text', :size => 255)
+    content_tag(:input, nil, :id => 'questionnaire_results[email]', :name => 'questionnaire_results[email]', :type => 'text', :size => 255)
   end
 
   tag 'questionnaire:questions' do |tag|
@@ -51,7 +51,7 @@ module QuestionnaireTags
 
   tag 'questionnaire:questions:question' do |tag|
     question = tag.locals.question
-    content_tag(:p, question.question, :class => 'question')
+    content_tag(:label, question.question, :class => 'question')
   end
 
   tag 'questionnaire:questions:answers' do |tag|
@@ -65,20 +65,20 @@ module QuestionnaireTags
       when 'Multiple-answer'
         answers.each do |answer|
           html += question_id
-          html += content_tag(:input, answer.answer, :value => answer.id.to_s, :name => element_name + '[][questionnaire_answer_id]', :type => 'checkbox')
+          html += content_tag(:input, content_tag(:label, answer.answer, :class => 'questionnaire-label-multiple-answer', :for => element_name + '[][questionnaire_answer_id]'+answer.id.to_s)+'<br/>', :class => 'questionnaire-multiple-answer', :value => answer.id.to_s, :id => element_name + '[][questionnaire_answer_id]'+answer.id.to_s, :name => element_name + '[][questionnaire_answer_id]', :type => 'checkbox')
         end
       when 'Single-answer'
         answers.each do |answer|
           html += question_id
-          html += content_tag(:input, answer.answer, :value => answer.id.to_s, :name => element_name + '[][questionnaire_answer_id]', :type => 'radio')
+          html += content_tag(:input, content_tag(:label, answer.answer, :class => 'questionnaire-label-single-answer', :for => element_name + '[][questionnaire_answer_id]'+answer.id.to_s)+'<br/>', :class => 'questionnaire-single-answer', :value => answer.id.to_s, :id => element_name + '[][questionnaire_answer_id]'+answer.id.to_s, :name => element_name + '[][questionnaire_answer_id]', :type => 'radio')
         end
       when 'Freetext'
         html += question_id
-        html += content_tag(:input, nil, :name => element_name + '[][freetext_answer]')
+        html += content_tag(:textarea, nil, :class => 'questionnaire-freetext', :name => element_name + '[][freetext_answer]')
       when 'Rating'
         html += question_id
         (1..4).each do |counter|
-          html += content_tag(:input, counter, :value => counter, :name => element_name + '[][rating_answer]', :type => 'radio')
+          html += content_tag(:input, content_tag(:label, counter, :class => 'questionnaire-label-rating', :for => element_name + '[][rating_answer]'+counter.to_s), :value => counter, :class => 'questionnaire-rating', :id => element_name + '[][rating_answer]'+counter.to_s, :name => element_name + '[][rating_answer]', :type => 'radio')
         end 
     end
     html

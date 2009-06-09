@@ -8,6 +8,8 @@
           %th.snippet Questionnaire
         - thead.language_header do
           %th.snippet Languages
+        - thead.clone_header do
+          %th.snippet 
         - thead.export_header do
           %th.snippet Export
         - thead.modify_header do
@@ -23,6 +25,10 @@
             %td.snippet
               - questionnaire.questionnaire_contents.each do |content|
                 %span= link_to content.language, edit_admin_questionnaire_url(questionnaire.id, :language => content.language)
+          - tbody.clone_cell do
+            %td.snippet
+              = link_to_function 'Clone', "language = prompt('Please enter the new language'); window.location = '/admin/questionnaires/clone/" +  questionnaire.id.to_s + "?language=' + language;"
+              = link_to 'Clone2', '/admin/questionnaires/clone/' + questionnaire.id.to_s
           - tbody.export_cell do
             %td.snippet
               = link_to 'Excel', edit_admin_questionnaire_url(questionnaire, :format => :xls)

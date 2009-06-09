@@ -2,7 +2,9 @@
   %p.content
     = answer_child_form.hidden_field :questionnaire_question_id, :value => qq_id , :index => nil
     = answer_child_form.hidden_field :new_data_id, :index => nil, :class => 'new-data'
-    %label Answer
+    %label.answer Answer
     - unless answer.new_record?
       = answer_child_form.hidden_field :id, :index => nil
     = answer_child_form.text_area :answer, :index => nil
+    = link_to_function "Remove Answer" do |page|
+      - page << "$(this).up('p.content').remove();"

@@ -10,9 +10,13 @@
         = question_child_form.hidden_field :id, :index => nil
         - answer_div_id = 'answers-' + question.id.to_s
       = question_child_form.text_area :question, :index => nil
-      = question_child_form.select :questionnaire_question_type_id, QuestionnaireQuestionType.find(:all).collect{|g| [g.name, g.id]}.unshift(['None', nil]), {}, { :index => nil, :onchange => "if(this.value == '2' || this.value == '3'){ $(this).up('p.content').next('div').down('a').addClassName('show'); }else{ $(this).up('p.content').next('div').down('a').removeClassName('show');$A($(this).up('p.content').next('div').getElementsByClassName('content')).each(Element.remove); }" }
+      = question_child_form.select :questionnaire_question_type_id, QuestionnaireQuestionType.find(:all).collect{|g| [g.name, g.id]}.unshift(['None', nil]), {}, { :index => nil, :onchange => "if(this.value == '2' || this.value == '3'){ $(this).up('p.content').next('div', 1).down('a').addClassName('show'); }else{ $(this).up('p.content').next('div').down('a').removeClassName('show');$A($(this).up('p.content').next('div').getElementsByClassName('content')).each(Element.remove); }" }
+      %div.remove 
+        = link_to_function "Remove Question" do |page| 
+          - page << "$(this).up('div.question').remove();"
       %div{:id => answer_div_id}
         = render :partial => 'answer', :collection => question.questionnaire_answers, :locals => { :qq_id => question.id }
         = link_to_function "Add Answer" do |page|
           - page.insert_html :bottom, answer_div_id, :partial => 'answer', :object => question.questionnaire_answers.build, :locals => { :qq_id => question.id }
           - page << "$$('.new-data').each( function(s) { s.writeAttribute('value', s.up().up().up().childElements()[0].childElements()[1].readAttribute('value')); });"
+          - page << "var addAnswer = $(this);$(this).up('div').insert(addAnswer);"

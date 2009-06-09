@@ -23,7 +23,7 @@
 .question p.content select {
   position: relative;
   top: -35px;
-  left: 0px;
+  left: 5px;
 }
 
 .question a {
@@ -37,6 +37,12 @@
   line-height:20px;
   padding-left:15px;
   text-decoration:none;
+  margin-bottom: 10px;
+  margin-left: 200px;
+}
+
+.question a.show {
+  display: block;
 }
 
 #add-question a {
@@ -50,4 +56,46 @@
   line-height:31px;
   padding-left:30px;
   text-decoration:none;
+  margin-top: 15px;
+  margin-left: 200px;
+}
+
+.questionnaire-form-area h2 {
+  background-color:#F5F5F5;
+  font-weight: bold;
+  padding:2px 4px;
+}
+
+.questionnaire-form-area #questions .question {
+  border-bottom:1px solid #EAEAEA;
+  margin: 0;
+  padding: 0;
+}
+
+.questionnaire-form-area #questions .question div {
+  border-top: 1px solid #f5f5f5;
+}
+
+.questionnaire-form-area p.content label.answer {
+  margin-left: 15px;
+  width: 185px;
+}
+
+.question .content a {
+  display: block;
+  background-image:url(/images/admin/remove-answer.png);
+  margin-left: 480px;
+  position: relative;
+  top: -58px;
+}
+
+.questionnaire-form-area #questions .question div.remove {
+  margin:-40px 0 0 278px;
+  border-top: none;
+  padding-left: 0px;
+}
+
+.questionnaire-form-area #questions .question div.remove a {
+  display: block;
+  background-image:url(/images/admin/remove-answer.png);
 }

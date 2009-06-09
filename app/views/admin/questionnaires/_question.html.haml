@@ -11,9 +11,12 @@
         - answer_div_id = 'answers-' + question.id.to_s
       = question_child_form.text_area :question, :index => nil
       = question_child_form.select :questionnaire_question_type_id, QuestionnaireQuestionType.find(:all).collect{|g| [g.name, g.id]}.unshift(['None', nil]), {}, { :index => nil, :onchange => "if(this.value == '2' || this.value == '3'){ $(this).up('p.content').next('div', 1).down('a').addClassName('show'); }else{ $(this).up('p.content').next('div').down('a').removeClassName('show');$A($(this).up('p.content').next('div').getElementsByClassName('content')).each(Element.remove); }" }
-      %div.remove 
-        = link_to_function "Remove Question" do |page| 
-          - page << "$(this).up('div.question').remove();"
+      %div.remove
+        - if question.new_record?
+          = link_to_function "Remove Question", "$(this).up('div.question').remove();"
+        - else
+          = link_to_function "Remove Question", "markForDestroyQuestion(this)"
+          = question_child_form.hidden_field :should_destroy, :index => nil, :value => 0, :class => 'should-destroy'
       %div{:id => answer_div_id}
         = render :partial => 'answer', :collection => question.questionnaire_answers, :locals => { :qq_id => question.id }
         = link_to_function "Add Answer" do |page|

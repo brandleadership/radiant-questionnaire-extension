@@ -1,5 +1,5 @@
 class Questionnaire < ActiveRecord::Base
-  has_many :questionnaire_contents
+  has_many :questionnaire_contents, :dependent => :destroy
   has_many :questionnaire_results
   after_update :save_questionnaire_contents
 
@@ -32,7 +32,13 @@ class Questionnaire < ActiveRecord::Base
        else
          question = content.questionnaire_questions.detect { |q| q.id == attributes[:id].to_i }
          question.attributes = attributes
-         question.save
+
+         if question.should_destroy?
+           question.destroy
+         else
+           question.save
+         end
+         
        end
     end
   end
@@ -49,9 +55,17 @@ class Questionnaire < ActiveRecord::Base
         answer = question.questionnaire_answers.build(attributes)
         answer.save()
       else
-        answer = question.questionnaire_answers.detect { |q| q.id == attributes[:id].to_i }
-        answer.attributes = attributes
-        answer.save()
+        #check if question is already deleted
+        unless question == nil
+          answer = question.questionnaire_answers.detect { |q| q.id == attributes[:id].to_i }
+          answer.attributes = attributes
+
+          if answer.should_destroy?
+            answer.destroy
+          else
+            answer.save
+          end
+        end 
       end
     end 
   end

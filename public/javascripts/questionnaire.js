@@ -8,3 +8,13 @@ document.observe('dom:loaded', function() {
     }
   });
 });
+
+function markForDestroyAnswer(element) {
+  $(element).next('.should-destroy').value = 1;
+  $(element).up('p.content').hide();
+}
+
+function markForDestroyQuestion(element) {
+  $(element).next('.should-destroy').value = 1;
+  $(element).up('div.question').hide();
+}

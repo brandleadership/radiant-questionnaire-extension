@@ -22,7 +22,7 @@ class QuestionnaireResults < ActiveRecord::Base
         corrected_attirubes.merge!({key_new => value })
       end
 
-      if !corrected_attirubes[:questionnaire_answer_id].blank? or !corrected_attirubes['questionnaire_answer_id'].blank? or !corrected_attirubes[:freetext_answer].blank? or !corrected_attirubes['rating_answer'].blank?
+      if !corrected_attirubes['questionnaire_answer_id'].blank? or !corrected_attirubes['freetext_answer'].blank? or !corrected_attirubes['rating_answer'].blank?
         corrected_attirubes[:questionnaire_result_id] = id
         questionnaire_result_entries.build(corrected_attirubes)
       end 

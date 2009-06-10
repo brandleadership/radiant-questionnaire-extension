@@ -4,7 +4,6 @@ class Questionnaire < ActiveRecord::Base
   has_many :questionnaire_results
   after_update :save_questionnaire_contents
 
-
   def questionnaire_contents_attributes=(questionnaire_contents_attributes)
     questionnaire_contents_attributes.each do |attributes|
       if attributes[:id].blank?
@@ -25,7 +24,7 @@ class Questionnaire < ActiveRecord::Base
          attributes[:questionnaire_content_id] = @new_content_id
        end
        content = questionnaire_contents.detect { |q| q.id == attributes[:questionnaire_content_id].to_i }
-             
+
        if attributes[:id].blank?
          question = content.questionnaire_questions.build(attributes)
          question.save();
@@ -39,7 +38,7 @@ class Questionnaire < ActiveRecord::Base
          else
            question.save
          end
-         
+
        end
     end
   end
@@ -66,12 +65,12 @@ class Questionnaire < ActiveRecord::Base
           else
             answer.save
           end
-        end 
+        end
       end
-    end 
+    end
   end
-  
-  def save_questionnaire_contents 
+
+  def save_questionnaire_contents
     questionnaire_contents.each do |q|
       q.save(false)
     end

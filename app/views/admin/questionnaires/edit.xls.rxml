@@ -9,11 +9,9 @@ xml.Workbook({
 
   xml.Worksheet 'ss:Name' => 'Recent Orders' do
     xml.Table do
-      write_header(xml, @questionnaire.questionnaire_contents.first.questionnaire_questions)
-      @questionnaire.questionnaire_contents.each do |content|
-        questions = content.questionnaire_questions
-        write_results(xml, @questionnaire, questions)
-      end
+      content = @questionnaire.questionnaire_contents.first
+      write_header(xml, content.questionnaire_questions)
+      write_results(xml, @questionnaire, content.questionnaire_questions)
     end
   end   
 end

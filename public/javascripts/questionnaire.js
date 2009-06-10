@@ -18,3 +18,7 @@ function markForDestroyQuestion(element) {
   $(element).next('.should-destroy').value = 1;
   $(element).up('div.question').hide();
 }
+
+function removeCheck(subject) {
+  return confirm('Do you want really remove this '+subject+'?');
+}

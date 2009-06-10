@@ -1,3 +1,5 @@
+- include_stylesheet 'admin/questionnaire'
+
 %h1 Questionnaires
 
 %table#questionnaires.index{:cellspacing=>"0", :border=>"0", :cellpadding=>"0"}
@@ -39,4 +41,4 @@
 - render_region :bottom do |bottom|
   - bottom.new_button do
     %p
-      = link_to image('new-questionnaire', :alt => 'New Questionnaire'), new_admin_questionnaire_url
+      = link_to 'New Questionnaire', new_admin_questionnaire_url, :id => 'questionnaire-add-new-questionnaire'

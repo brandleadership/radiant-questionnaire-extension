@@ -13,9 +13,9 @@
       = question_child_form.select :questionnaire_question_type_id, QuestionnaireQuestionType.find(:all).collect{|g| [g.name, g.id]}.unshift(['None', nil]), {}, { :index => nil, :onchange => "if(this.value == '2' || this.value == '3'){ $(this).up('p.content').next('div', 1).down('a').addClassName('show'); }else{ $(this).up('p.content').next('div').down('a').removeClassName('show');$A($(this).up('p.content').next('div').getElementsByClassName('content')).each(Element.remove); }" }
       %div.remove
         - if question.new_record?
-          = link_to_function "Remove Question", "$(this).up('div.question').remove();"
+          = link_to_function "Remove Question", "if(removeCheck('question')){$(this).up('div.question').remove();}else{return false;}"
         - else
-          = link_to_function "Remove Question", "markForDestroyQuestion(this)"
+          = link_to_function "Remove Question", "if(removeCheck('question')){markForDestroyQuestion(this)}else{return false;}"
           = question_child_form.hidden_field :should_destroy, :index => nil, :value => 0, :class => 'should-destroy'
       %div{:id => answer_div_id}
         = render :partial => 'answer', :collection => question.questionnaire_answers, :locals => { :qq_id => question.id }

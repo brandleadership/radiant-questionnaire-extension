@@ -15,7 +15,6 @@ module QuestionnaireTags
     results << %(<form id="questionnaire-form" action="#{action}" method="post">)
     results << content_tag(:input, nil, :value => tag.locals.questionnaire.id.to_s, :name => 'questionnaire_results[questionnaire_id]', :type => 'hidden')
     results << tag.expand
-    results << %(<div id="questionnaire-submit"><input type="submit"></div>)
     results << "</form>"
   end
 
@@ -65,12 +64,12 @@ module QuestionnaireTags
       when 'Multiple-answer'
         answers.each do |answer|
           html += question_id
-          html += content_tag(:input, content_tag(:label, answer.answer, :class => 'questionnaire-label-multiple-answer', :for => element_name + '[][questionnaire_answer_id]'+answer.id.to_s)+'<br/>', :class => 'questionnaire-multiple-answer', :value => answer.id.to_s, :id => element_name + '[][questionnaire_answer_id]'+answer.id.to_s, :name => element_name + '[][questionnaire_answer_id]', :type => 'checkbox')
+          html += content_tag(:input, content_tag(:label, answer.answer, :class => 'questionnaire-label-multiple-answer', :for => element_name + '[][questionnaire_answer_id]['+answer.id.to_s+']')+'<br/>', :class => 'questionnaire-multiple-answer', :value => answer.id.to_s, :id => element_name + '[][questionnaire_answer_id]['+answer.id.to_s+']', :name => element_name + '[][questionnaire_answer_id]', :type => 'checkbox')
         end
       when 'Single-answer'
         answers.each do |answer|
           html += question_id
-          html += content_tag(:input, content_tag(:label, answer.answer, :class => 'questionnaire-label-single-answer', :for => element_name + '[][questionnaire_answer_id]'+answer.id.to_s)+'<br/>', :class => 'questionnaire-single-answer', :value => answer.id.to_s, :id => element_name + '[][questionnaire_answer_id]'+answer.id.to_s, :name => element_name + '[][questionnaire_answer_id]', :type => 'radio')
+          html += content_tag(:input, content_tag(:label, answer.answer, :class => 'questionnaire-label-single-answer', :for => element_name + '[][questionnaire_answer_id]['+answer.id.to_s+question.id.to_s+']')+'<br/>', :class => 'questionnaire-single-answer', :value => answer.id.to_s, :id => element_name + '[][questionnaire_answer_id]['+answer.id.to_s+question.id.to_s+']', :name => element_name + '[][questionnaire_answer_id__'+question.id.to_s+']', :type => 'radio')
         end
       when 'Freetext'
         html += question_id
@@ -78,7 +77,7 @@ module QuestionnaireTags
       when 'Rating'
         html += question_id
         (1..4).each do |counter|
-          html += content_tag(:input, content_tag(:label, counter, :class => 'questionnaire-label-rating', :for => element_name + '[][rating_answer]'+counter.to_s), :value => counter, :class => 'questionnaire-rating', :id => element_name + '[][rating_answer]'+counter.to_s, :name => element_name + '[][rating_answer]', :type => 'radio')
+          html += content_tag(:input, content_tag(:label, counter, :class => 'questionnaire-label-rating', :for => element_name + '[][rating_answer]['+counter.to_s+question.id.to_s+']'), :value => counter, :class => 'questionnaire-rating', :id => element_name + '[][rating_answer]['+counter.to_s+question.id.to_s+']', :name => element_name + '[][rating_answer__'+question.id.to_s+']', :type => 'radio')
         end 
     end
     html

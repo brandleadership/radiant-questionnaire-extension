@@ -7,7 +7,7 @@ class QuestionnaireResultsController < ApplicationController
     result = QuestionnaireResults.new(params[:questionnaire_results])
     result.submission_date = Time.now
     result.save()
-    redirect_to ('/')
+    redirect_to (params[:questionnaire_redirect_to] || '/')
   end
 
 end

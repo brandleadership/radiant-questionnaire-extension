@@ -4,7 +4,7 @@ Radiant *Questionnaire* Extension
 <table>
     <tr>
         <td>Author</td>
-        <td>Pascal NŠf - <a href="http://www.screenconcept.ch">Screen Concept</a></td>
+        <td>Pascal N&auml;f - <a href="http://www.screenconcept.ch">Screen Concept</a></td>
     </tr>
     <tr>
         <td>Contact:</td>
@@ -43,41 +43,41 @@ rake radiant:extensions:questionnaire:update
 Usage Example
 -------------
 
-<r:questionnaire title="[questionnaire]">
-  <r:questionnaire:form>
-    <input id="questionnaire_redirect_to" name="questionnaire_redirect_to" type="hidden"
-      value="<r:children><r:first><r:url/></r:first></r:children>" />
-    <div class="name links">
-      <label for="questionnaire_results[firstname]">First name</label>
-      <div id="questionnaire-error-firstname">
-        <r:questionnaire:results:firstname />
-      </div>
-    </div>
-    <div class="name rechts">
-      <label for="questionnaire_results[lastname]">Surname</label>
-      <div id="questionnaire-error-lastname">
-        <r:questionnaire:results:lastname />
-      </div>
-    </div>
-    <div class="name">
-      <label for="questionnaire_results[email]">E-Mail Address</label>
-      <div id="questionnaire-error-email">
-        <r:questionnaire:results:email />
-      </div>
-    </div>
-    <div id="questionnaire-questions">
-      <r:questionnaire:questions:each>
-        <div class="questionnaire-question">
-          <r:questionnaire:questions:question />
-          <div class="questionnaire-question-answer">
-            <r:questionnaire:questions:answers />
-          </div>
+  <r:questionnaire title="[questionnaire]">
+    <r:questionnaire:form>
+      <input id="questionnaire_redirect_to" name="questionnaire_redirect_to" type="hidden"
+        value="<r:children><r:first><r:url/></r:first></r:children>" />
+      <div class="name links">
+        <label for="questionnaire_results[firstname]">First name</label>
+        <div id="questionnaire-error-firstname">
+          <r:questionnaire:results:firstname />
         </div>
-      </r:questionnaire:questions:each>
-    </div>
-    <div id="questionnaire-submit"><input value="Send" type="submit"></div>
-  </r:questionnaire:form>
-</r:questionnaire>
+      </div>
+      <div class="name rechts">
+        <label for="questionnaire_results[lastname]">Surname</label>
+        <div id="questionnaire-error-lastname">
+          <r:questionnaire:results:lastname />
+        </div>
+      </div>
+      <div class="name">
+        <label for="questionnaire_results[email]">E-Mail Address</label>
+        <div id="questionnaire-error-email">
+          <r:questionnaire:results:email />
+        </div>
+      </div>
+      <div id="questionnaire-questions">
+        <r:questionnaire:questions:each>
+          <div class="questionnaire-question">
+            <r:questionnaire:questions:question />
+            <div class="questionnaire-question-answer">
+              <r:questionnaire:questions:answers />
+            </div>
+          </div>
+        </r:questionnaire:questions:each>
+      </div>
+      <div id="questionnaire-submit"><input value="Send" type="submit"></div>
+    </r:questionnaire:form>
+  </r:questionnaire>
 
 Contributors
 ------------
@@ -89,8 +89,8 @@ Sponsors
 
 Some work has been kindly sponsored by:
 
-* [Screen Concept](http://www.screenconcept.ch)
 * [avaloq] (http://www.avaloq.ch)
+* [Screen Concept](http://www.screenconcept.ch)
 
 License
 -------

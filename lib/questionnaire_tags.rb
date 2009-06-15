@@ -4,9 +4,18 @@ module QuestionnaireTags
   tag 'questionnaire' do |tag|
     unless tag.attr['title'].blank?
       tag.locals.questionnaire_content = QuestionnaireContent.find_by_title(tag.attr['title'])
-      tag.locals.questionnaire = tag.locals.questionnaire_content.questionnaire
+      unless tag.locals.questionnaire_content == nil
+        questionnaire = tag.locals.questionnaire_content.questionnaire
+        tag.locals.questionnaire = questionnaire
+        unless (questionnaire.startdate == nil and questionnaire.enddate == nil)
+          current_date = Time.now()
+          start_date = questionnaire.startdate
+          end_date = questionnaire.enddate
+          return 'Questionnaire is expired' unless current_date.between?(start_date, end_date) #unless ((start_date <=> current_date) <= 0 and (end_date <=> current_date) >= 0)
+        end
+      end
     end
-    tag.expand if tag.locals.questionnaire_content != nil
+    tag.expand
   end
 
   tag 'questionnaire:form' do |tag|

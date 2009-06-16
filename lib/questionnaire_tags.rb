@@ -18,6 +18,10 @@ module QuestionnaireTags
     tag.expand
   end
 
+  tag 'questionnaire:description' do |tag|
+    tag.locals.questionnaire_content.description
+  end
+
   tag 'questionnaire:form' do |tag|
     results = []
     action =  "/questionnaire_results"

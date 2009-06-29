@@ -30,6 +30,7 @@
           - tbody.clone_cell do
             %td.snippet
               = link_to_function 'Clone', "language = prompt('Please enter the new language'); window.location = '/admin/questionnaires/clone/" +  questionnaire.id.to_s + "?language=' + language;"
+              = link_to 'Copy', '/admin/questionnaires/copy/' +  questionnaire.id.to_s
           - tbody.export_cell do
             %td.snippet
               = link_to 'Excel', edit_admin_questionnaire_url(questionnaire, :format => :xls)

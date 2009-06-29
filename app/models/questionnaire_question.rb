@@ -12,8 +12,26 @@ class QuestionnaireQuestion < ActiveRecord::Base
   end
   
   def get_questionnaire_result_entries(questionnaire_result)
-    questionnaire_result_entries.select { |q|
+    questionnaire_result_entries.select do |q|
       q.questionnaire_result_id == questionnaire_result.id.to_i
-    }
+    end
+  end
+
+  def copy(questionnaire_content_new)
+    question_copy = QuestionnaireQuestion.new
+    attributes.each {|attr, value| eval("question_copy.#{attr}= #{attr}")}
+    question_copy.id = nil
+    question_copy.questionnaire_content_id = questionnaire_content_new.id
+    question_copy.created_at = nil
+    question_copy.updated_at = nil
+    question_copy.save
+    question_copy
+  end
+
+  def copy_with_children(questionnaire_content_new)
+    question_new = copy(questionnaire_content_new)
+    questionnaire_answers.each do |answer|
+       answer.copy(question_new)
+     end
   end
 end

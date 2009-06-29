@@ -75,4 +75,21 @@ class Questionnaire < ActiveRecord::Base
       q.save(false)
     end
   end
+
+  def copy
+    questionnaire_copy = Questionnaire.new
+    attributes.each {|attr, value| eval("questionnaire_copy.#{attr}= #{attr}")}
+    questionnaire_copy.id = nil
+    questionnaire_copy.created_at = nil
+    questionnaire_copy.updated_at = nil
+    questionnaire_copy.save
+    questionnaire_copy
+  end
+
+  def copy_with_children
+    questionnaire_new = copy
+    questionnaire_contents.each do |content|
+      content.copy_with_children(questionnaire_new)
+    end
+  end
 end

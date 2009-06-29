@@ -10,6 +10,7 @@ class QuestionnaireExtension < Radiant::Extension
      map.namespace :admin, :member => { :remove => :get } do |admin|
        admin.resources :questionnaires
        admin.connect '/questionnaires/clone/:id', :controller => 'questionnaires', :action => 'cloning'
+       admin.connect '/questionnaires/copy/:id', :controller => 'questionnaires', :action => 'copy'
      end
 
      map.connect 'questionnaire_results', :controller => 'questionnaire_results', :action => 'create'

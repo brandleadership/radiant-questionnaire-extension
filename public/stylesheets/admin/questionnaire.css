@@ -119,6 +119,7 @@
   margin:-37px 0 0 278px;
 }
 
+
 * html #questionnaire_startdate,
 * html #questionnaire_enddate {
   width: 260px;
@@ -135,3 +136,15 @@
 }
 
 .red { color: red; border: 1px solid red; }
+
+.optional_checkbox {
+  position: relative;
+  top: -35px;
+  left: 100px;
+}
+
+.comment_checkbox {
+  position: relative;
+  top: -35px;
+  left: 120px;    
+}

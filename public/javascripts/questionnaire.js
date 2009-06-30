@@ -7,6 +7,18 @@ document.observe('dom:loaded', function() {
       $(s).childNodes.item($(s).childNodes.length-2).childNodes.item($(s).childNodes.item($(s).childNodes.length-2).childNodes.length-2).addClassName('show');
     }
   });
+
+  Event.addBehavior( {
+    '.button:click':  function() {
+      $$('.checkbox_checker').each( function(element) {
+          if ($(element).checked)
+            $(element).next().remove();
+          else
+            $(element).remove();
+        }
+      )
+    }
+  });
 });
 
 function markForDestroyAnswer(element) {

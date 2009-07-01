@@ -85,13 +85,11 @@ module QuestionnaireTags
           html += question_id
           html += content_tag(:input, content_tag(:label, answer.answer, :class => 'questionnaire-label-multiple-answer', :for => element_name + '[][questionnaire_answer_id]['+answer.id.to_s+']')+'<br/>', :class => 'questionnaire-multiple-answer' + required_class, :value => answer.id.to_s, :id => element_name + '[][questionnaire_answer_id]['+answer.id.to_s+']', :name => element_name + '[][questionnaire_answer_id]', :type => 'checkbox')
         end
-        html += add_comment_field(question, element_name)
       when 'Single-answer'
         answers.each do |answer|
           html += question_id
           html += content_tag(:input, content_tag(:label, answer.answer, :class => 'questionnaire-label-single-answer', :for => element_name + '[][questionnaire_answer_id]['+answer.id.to_s+question.id.to_s+']')+'<br/>', :class => 'questionnaire-single-answer' + required_class, :value => answer.id.to_s, :id => element_name + '[][questionnaire_answer_id]['+answer.id.to_s+question.id.to_s+']', :name => element_name + '[][questionnaire_answer_id__'+question.id.to_s+']', :type => 'radio')
         end
-        html += add_comment_field(question, element_name)
       when 'Freetext'
         html += question_id
         html += content_tag(:textarea, nil, :class => 'questionnaire-freetext' + required_class, :name => element_name + '[][freetext_answer]')
@@ -100,15 +98,13 @@ module QuestionnaireTags
         (1..4).each do |counter|
           html += content_tag(:input, content_tag(:label, counter, :class => 'questionnaire-label-rating', :for => element_name + '[][rating_answer]['+counter.to_s+question.id.to_s+']'), :value => counter, :class => 'questionnaire-rating' + required_class, :id => element_name + '[][rating_answer]['+counter.to_s+question.id.to_s+']', :name => element_name + '[][rating_answer__'+question.id.to_s+']', :type => 'radio')
         end
-        html += add_comment_field(question, element_name)
     end
     html
   end
 
-  def add_comment_field(question, element_name)
-    if question.has_comment?
-      return content_tag(:textarea, nil, :class => 'questionnaire-comment', :name => element_name + '[][comment]')
-    end
-    ''
+  tag 'questionnaire:questions:commentField' do |tag|
+    question = tag.locals.question
+    element_name = "questionnaire_results[questionnaire_result_entries_attributes]"
+    content_tag(:textarea, nil, :class => 'questionnaire-comment', :name => element_name + '[][comment]') if question.has_comment?
   end
 end

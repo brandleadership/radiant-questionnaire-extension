@@ -11,7 +11,9 @@
         - answer_div_id = 'answers-' + question.id.to_s
       = question_child_form.text_area :question, :index => nil
       = question_child_form.select :questionnaire_question_type_id, QuestionnaireQuestionType.find(:all).collect{|g| [g.name, g.id]}.unshift(['None', nil]), {}, { :index => nil, :onchange => "if(this.value == '2' || this.value == '3'){ $(this).up('p.content').next('div', 1).down('a').addClassName('show'); }else{ $(this).up('p.content').next('div').down('a').removeClassName('show');$A($(this).up('p.content').next('div').getElementsByClassName('content')).each(Element.remove); }" }
+      %label.optional_label optional
       = question_child_form.check_box :optional, {:index => nil,  :class => 'optional_checkbox checkbox_checker' }, 1, 0
+      %label.comment_label comment
       = question_child_form.check_box :comment, {:index => nil,  :class => 'comment_checkbox checkbox_checker' }, 1 ,0
       %div.remove
         - if question.new_record?

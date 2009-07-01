@@ -10,7 +10,15 @@ class QuestionnaireQuestion < ActiveRecord::Base
   def should_destroy?
     should_destroy.to_i == 1
   end
-  
+
+  def has_comment?
+    comment == true  
+  end
+
+  def is_optional?
+    optional == true  
+  end
+
   def get_questionnaire_result_entries(questionnaire_result)
     questionnaire_result_entries.select do |q|
       q.questionnaire_result_id == questionnaire_result.id.to_i

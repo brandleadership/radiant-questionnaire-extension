@@ -137,14 +137,28 @@
 
 .red { color: red; border: 1px solid red; }
 
+.optional_label  {
+  position: relative;
+  top: -57px;
+  left: 630px;
+  display: inline;
+}
+
 .optional_checkbox {
   position: relative;
   top: -35px;
-  left: 100px;
+  left: 95px;
+}
+
+.comment_label  {
+  position: relative;
+  top: -57px;
+  left: 530px;
+  display: inline;
 }
 
 .comment_checkbox {
   position: relative;
   top: -35px;
-  left: 120px;    
+  left: 175px;
 }

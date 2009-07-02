@@ -24,7 +24,8 @@ module Admin::QuestionnairesHelper
               xml.Cell{ xml.Data '', 'ss:Type' => 'String' }
             end
         end
-
+        xml.Cell { xml.Data 'comment', 'ss:Type' => 'String' } if question.has_comment?
+        
       end
     end
     xml.Row do
@@ -46,6 +47,7 @@ module Admin::QuestionnairesHelper
               xml.Cell { xml.Data answer.answer, 'ss:Type' => 'String' }
             end 
         end
+        xml.Cell { xml.Data '', 'ss:Type' => 'String' } if question.has_comment?
       end
     end                                                               
   end
@@ -66,6 +68,7 @@ module Admin::QuestionnairesHelper
             case question.questionnaire_question_type.name
               when 'Freetext'
                 xml.Cell { xml.Data entries.first.freetext_answer, 'ss:Type' => 'String' }
+                xml.Cell { xml.Data entries.last.comment, 'ss:Type' => 'String' } if question.has_comment?
               when 'Rating'
                 (1..4).each do |counter|
                   if entries.first.rating_answer == counter
@@ -74,6 +77,7 @@ module Admin::QuestionnairesHelper
                     xml.Cell { xml.Data '', 'ss:Type' => 'String' }
                   end
                 end
+                xml.Cell { xml.Data entries.last.comment, 'ss:Type' => 'String' } if question.has_comment?
               else
                 question.questionnaire_answers.each do |answer|
                   has_result = false
@@ -86,7 +90,8 @@ module Admin::QuestionnairesHelper
                   if !has_result
                     xml.Cell { xml.Data '', 'ss:Type' => 'String' }
                   end
-              end
+                end
+                xml.Cell { xml.Data entries.last.comment, 'ss:Type' => 'String' } if question.has_comment?
             end
           else
             xml.Cell { xml.Data '', 'ss:Type' => 'String' }

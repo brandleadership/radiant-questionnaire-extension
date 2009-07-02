@@ -103,10 +103,12 @@ module QuestionnaireTags
   end
 
   tag 'questionnaire:questions:if_comment_field' do |tag|
+    question = tag.locals.question
     tag.expand if question.has_comment?
   end
 
   tag 'questionnaire:questions:unless_comment_field' do |tag|
+    question = tag.locals.question
     tag.expand unless question.has_comment?
   end
 

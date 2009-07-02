@@ -102,7 +102,15 @@ module QuestionnaireTags
     html
   end
 
-  tag 'questionnaire:questions:commentField' do |tag|
+  tag 'questionnaire:questions:if_comment_field' do |tag|
+    tag.expand if question.has_comment?
+  end
+
+  tag 'questionnaire:questions:unless_comment_field' do |tag|
+    tag.expand unless question.has_comment?
+  end
+
+  tag 'questionnaire:questions:comment_field' do |tag|
     question = tag.locals.question
     element_name = "questionnaire_results[questionnaire_result_entries_attributes]"
     content_tag(:textarea, nil, :class => 'questionnaire-comment', :name => element_name + '[][comment]') if question.has_comment?

@@ -1,0 +1,3 @@
+-if @page.class_name == 'QuestionnairePage'
+  %label Questionnaire
+  = select :page, :questionnaire_id, Questionnaire.find(:all).collect{|g| [g.questionnaire_contents.first.title, g.id]}.unshift(['None', nil])

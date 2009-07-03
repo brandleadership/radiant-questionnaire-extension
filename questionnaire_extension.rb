@@ -23,6 +23,8 @@ class QuestionnaireExtension < Radiant::Extension
     admin.questionnaires = Radiant::AdminUI.load_default_questionnaire_regions
 
     Page.send :include,  QuestionnaireTags
+
+    admin.page.edit.add :parts_bottom, "questionnaire", :after => 'edit_layout_and_type' 
   end
   
   def deactivate

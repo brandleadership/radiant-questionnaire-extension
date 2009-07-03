@@ -2,18 +2,31 @@ module QuestionnaireTags
   include Radiant::Taggable
 
   tag 'questionnaire' do |tag|
-    unless tag.attr['title'].blank?
+    tag.locals.questionnaire_content = nil
+    if !tag.attr['title'].blank?
       tag.locals.questionnaire_content = QuestionnaireContent.find_by_title(tag.attr['title'])
-      unless tag.locals.questionnaire_content == nil
-        questionnaire = tag.locals.questionnaire_content.questionnaire
-        tag.locals.questionnaire = questionnaire
-        unless (questionnaire.startdate == nil and questionnaire.enddate == nil)
-          current_date = Time.now()
-          start_date = questionnaire.startdate
-          end_date = questionnaire.enddate
-          return 'Questionnaire is expired' unless current_date.between?(start_date, end_date) #unless ((start_date <=> current_date) <= 0 and (end_date <=> current_date) >= 0)
+    else
+      if !questionnaire_id.blank?
+        questionnaire = Questionnaire.find_by_id(questionnaire_id)
+        tag.locals.questionnaire_content = nil
+        tag.locals.questionnaire_content = questionnaire.questionnaire_contents.detect { |q| q.language == request.language.split('-').first }
+        if tag.locals.questionnaire_content == nil
+          content = questionnaire.questionnaire_contents.first
         end
       end
+    end 
+
+    if tag.locals.questionnaire_content == nil
+      return 'No questionnaire found'
+    end
+
+    questionnaire = tag.locals.questionnaire_content.questionnaire
+    tag.locals.questionnaire = questionnaire
+    unless (questionnaire.startdate == nil and questionnaire.enddate == nil)
+      current_date = Time.now()
+      start_date = questionnaire.startdate
+      end_date = questionnaire.enddate
+      return 'Questionnaire is expired' unless current_date.between?(start_date, end_date) #unless ((start_date <=> current_date) <= 0 and (end_date <=> current_date) >= 0)
     end
     tag.expand
   end

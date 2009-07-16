@@ -108,11 +108,21 @@ module QuestionnaireTags
         html += content_tag(:textarea, nil, :class => 'questionnaire-freetext' + required_class, :name => element_name + '[][freetext_answer]')
       when 'Rating'
         html += question_id
+        html_line_1 = ''
+        html_line_2 = ''
         (1..4).each do |counter|
-          html += content_tag(:input, content_tag(:label, counter, :class => 'questionnaire-label-rating', :for => element_name + '[][rating_answer]['+counter.to_s+question.id.to_s+']'), :value => counter, :class => 'questionnaire-rating' + required_class, :id => element_name + '[][rating_answer]['+counter.to_s+question.id.to_s+']', :name => element_name + '[][rating_answer__'+question.id.to_s+']', :type => 'radio')
+          smile_image = ''
+          case counter
+            when 1: smile_image = 'smile-worse.jpg'
+            when 2: smile_image = 'smile-bad.jpg'
+            when 3: smile_image = 'smile-good.jpg'
+            when 4: smile_image = 'smile-very-good.jpg'
+          end
+          html_line_1 += content_tag(:td, content_tag(:input, nil , :value => counter, :class => 'questionnaire-rating' + required_class, :id => element_name + '[][rating_answer]['+counter.to_s+question.id.to_s+']', :name => element_name + '[][rating_answer__'+question.id.to_s+']', :type => 'radio'))
+          html_line_2 += content_tag(:td, content_tag(:img, nil, :src => '/images/questionnaire/' + smile_image))
         end
     end
-    html
+    content_tag(:table,content_tag(:tr, html_line_1) + content_tag(:tr, html_line_2), :class => 'rating-table' )
   end
 
   tag 'questionnaire:questions:if_comment_field' do |tag|

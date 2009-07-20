@@ -121,8 +121,9 @@ module QuestionnaireTags
           html_line_1 += content_tag(:td, content_tag(:input, nil , :value => counter, :class => 'questionnaire-rating' + required_class, :id => element_name + '[][rating_answer]['+counter.to_s+question.id.to_s+']', :name => element_name + '[][rating_answer__'+question.id.to_s+']', :type => 'radio'))
           html_line_2 += content_tag(:td, content_tag(:img, nil, :src => '/images/questionnaire/' + smile_image))
         end
+        html += content_tag(:table,content_tag(:tr, html_line_1) + content_tag(:tr, html_line_2), :class => 'rating-table' )
     end
-    content_tag(:table,content_tag(:tr, html_line_1) + content_tag(:tr, html_line_2), :class => 'rating-table' )
+    html
   end
 
   tag 'questionnaire:questions:if_comment_field' do |tag|

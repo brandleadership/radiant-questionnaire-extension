@@ -3,6 +3,7 @@ class QuestionnaireQuestion < ActiveRecord::Base
   belongs_to :questionnaire_question_type
   has_many :questionnaire_answers, :dependent => :destroy
   has_many :questionnaire_result_entries
+  has_many :questionnaire_questions, :foreign_key=> "questionnaire_master_question_id"
  
   cattr_accessor :new_data_id
   cattr_accessor :should_destroy

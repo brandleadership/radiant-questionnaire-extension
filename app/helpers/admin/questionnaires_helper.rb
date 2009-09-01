@@ -60,8 +60,13 @@ module Admin::QuestionnairesHelper
         xml.Cell { xml.Data result.firstname, 'ss:Type' => 'String' }
         xml.Cell { xml.Data result.email, 'ss:Type' => 'String' }
         questions.each do |question|
-          #get all answers to a question
           entries = question.get_questionnaire_result_entries(result)
+
+          if entries == nil or entries.blank?
+            question.questionnaire_questions.each do |other_qustion|
+              entries += other_qustion.get_questionnaire_result_entries(result)
+            end
+          end  
 
           if entries != nil and !entries.blank?
 
@@ -94,7 +99,18 @@ module Admin::QuestionnairesHelper
                 xml.Cell { xml.Data entries.last.comment, 'ss:Type' => 'String' } if question.has_comment?
             end
           else
-            xml.Cell { xml.Data '', 'ss:Type' => 'String' }
+            case question.questionnaire_question_type.name
+              when 'Freetext'
+                xml.Cell { xml.Data '', 'ss:Type' => 'String' }
+              when 'Rating'
+                (1..4).each do
+                  xml.Cell { xml.Data '', 'ss:Type' => 'String' }
+                end
+              else
+                question.questionnaire_answers.each do
+                  xml.Cell { xml.Data '', 'ss:Type' => 'String' }
+                end
+            end
           end
         end
       end

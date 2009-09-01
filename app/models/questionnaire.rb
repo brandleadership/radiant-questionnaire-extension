@@ -91,5 +91,6 @@ class Questionnaire < ActiveRecord::Base
     questionnaire_contents.each do |content|
       content.copy_with_children(questionnaire_new)
     end
+    questionnaire_new
   end
 end

@@ -28,7 +28,7 @@ class Admin::QuestionnairesController < Admin::ResourceController
 
     #clone questionnaire question
     content.questionnaire_questions.each do |question|
-      question.copy_with_children(clone_content)
+      question.copy_with_children(clone_content, true)
     end
 
     #redirect to questionnaire overview
@@ -37,7 +37,23 @@ class Admin::QuestionnairesController < Admin::ResourceController
 
   def copy
     questionnaire = Questionnaire.find_by_id(params[:id])
-    questionnaire.copy_with_children
+    questionnaire_new = questionnaire.copy_with_children
+
+    #copy master_question_id to questions of cloned questionnaires
+    master_content = nil
+    questionnaire_new.questionnaire_contents.each do |content|
+      if content == questionnaire_new.questionnaire_contents.first
+        master_content = content
+      else
+        element_counter = 0
+        master_content.questionnaire_questions.each do |master_question|
+          question = content.questionnaire_questions[element_counter]
+          question.questionnaire_master_question_id = master_question.id
+          question.save
+          element_counter += 1
+        end
+      end
+    end
 
     #redirect to questionnaire overview
     redirect_to admin_questionnaires_url

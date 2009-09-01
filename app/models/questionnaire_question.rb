@@ -26,19 +26,24 @@ class QuestionnaireQuestion < ActiveRecord::Base
     end
   end
 
-  def copy(questionnaire_content_new)
+  def copy(questionnaire_content_new, set_master_question = false)
     question_copy = QuestionnaireQuestion.new
     attributes.each {|attr, value| eval("question_copy.#{attr}= #{attr}")}
     question_copy.id = nil
     question_copy.questionnaire_content_id = questionnaire_content_new.id
+    if set_master_question
+      question_copy.questionnaire_master_question_id = id
+    else
+      question_copy.questionnaire_master_question_id = nil
+    end  
     question_copy.created_at = nil
     question_copy.updated_at = nil
     question_copy.save
     question_copy
   end
 
-  def copy_with_children(questionnaire_content_new)
-    question_new = copy(questionnaire_content_new)
+  def copy_with_children(questionnaire_content_new, set_master_question = false)
+    question_new = copy(questionnaire_content_new, set_master_question)
     questionnaire_answers.each do |answer|
        answer.copy(question_new)
      end

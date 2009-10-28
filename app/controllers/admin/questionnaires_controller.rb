@@ -58,4 +58,5 @@ class Admin::QuestionnairesController < Admin::ResourceController
     #redirect to questionnaire overview
     redirect_to admin_questionnaires_url
   end
+ 
 end

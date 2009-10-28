@@ -19,6 +19,14 @@ document.observe('dom:loaded', function() {
       )
     }
   });
+
+  Event.addBehavior( {
+    '.button:click':  function() {
+      $$('.move-up').each( function(element) {
+      })
+    }
+  });
+    
 });
 
 function markForDestroyAnswer(element) {

@@ -1,9 +1,10 @@
 - fields_for "questionnaire[questionnaire_questions_attributes][]", question do |question_child_form|
   .question
-    %p.content
+    .data
       = question_child_form.hidden_field :questionnaire_content_id, :value => qc_id , :index => nil
       = question_child_form.hidden_field :new_data_id, :index => nil
-      %label Question
+      = question_child_form.hidden_field :order, :index => nil
+      %label.title Question
       - if question.new_record?
         - answer_div_id = 'answers-new-0'
       -else
@@ -15,15 +16,16 @@
       = question_child_form.check_box :optional, {:index => nil,  :class => 'optional_checkbox checkbox_checker' }, 1, 0
       %label.comment_label comment
       = question_child_form.check_box :comment, {:index => nil,  :class => 'comment_checkbox checkbox_checker' }, 1 ,0
-      %div.remove
-        - if question.new_record?
-          = link_to_function "Remove Question", "if(removeCheck('question')){$(this).up('div.question').remove();}else{return false;}"
-        - else
-          = link_to_function "Remove Question", "if(removeCheck('question')){markForDestroyQuestion(this)}else{return false;}"
-          = question_child_form.hidden_field :should_destroy, :index => nil, :value => 0, :class => 'should-destroy'
-      %div{:id => answer_div_id}
-        = render :partial => 'answer', :collection => question.questionnaire_answers, :locals => { :qq_id => question.id }
-        = link_to_function "Add Answer" do |page|
-          - page.insert_html :bottom, answer_div_id, :partial => 'answer', :object => question.questionnaire_answers.build, :locals => { :qq_id => question.id }
-          - page << "$$('.new-data').each( function(s) { s.writeAttribute('value', s.up().up().up().childElements()[0].childElements()[1].readAttribute('value')); });"
-          - page << "var addAnswer = $(this);$(this).up('div').insert(addAnswer);"
+      = '<a href="#" class="move-up" />UP</a>'
+    %div.remove
+      - if question.new_record?
+        = link_to_function "Remove Question", "if(removeCheck('question')){$(this).up('div.question').remove();}else{return false;}"
+      - else
+        = link_to_function "Remove Question", "if(removeCheck('question')){markForDestroyQuestion(this)}else{return false;}"
+        = question_child_form.hidden_field :should_destroy, :index => nil, :value => 0, :class => 'should-destroy'
+    %div.answers{:id => answer_div_id}
+      = render :partial => 'answer', :collection => question.questionnaire_answers, :locals => { :qq_id => question.id }
+      = link_to_function "Add Answer" do |page|
+        - page.insert_html :bottom, answer_div_id, :partial => 'answer', :object => question.questionnaire_answers.build, :locals => { :qq_id => question.id }
+        - page << "$$('.new-data').each( function(s) { s.writeAttribute('value', s.up().up().up().childElements()[0].childElements()[1].readAttribute('value')); });"
+        - page << "var addAnswer = $(this);$(this).up('div').insert(addAnswer);"

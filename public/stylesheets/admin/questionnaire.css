@@ -54,7 +54,7 @@
   background-image:url(/images/admin/add-new-question.png);
   background-position:left top;
   background-repeat:no-repeat;
-  padding-left: 15px;
+  padding-left: 30px;
   color:black;
   font-size:12px;
   height:31px;
@@ -70,4 +70,12 @@
 
 .move-up {
   float: left;
+}
+
+div.answer {
+  margin-left: 200px;
+}
+
+div.hide {
+  display: none;
 }

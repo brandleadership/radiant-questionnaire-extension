@@ -10,8 +10,8 @@ xml.Workbook({
   xml.Worksheet 'ss:Name' => 'Recent Orders' do
     xml.Table do
       content = @questionnaire.questionnaire_contents.first
-      write_header(xml, content.questionnaire_questions)
-      write_results(xml, @questionnaire, content.questionnaire_questions)
+      write_header(xml, content.questionnaire_questions.sort_by{|q| q.order})
+      write_results(xml, @questionnaire, content.questionnaire_questions.sort_by{|q| q.order})
     end
   end   
 end

@@ -36,7 +36,7 @@
             = child_form.text_field :language, :maxlength => 2, :index => nil
           %h2 Questions
           #questions
-            = render :partial => 'question', :collection => q_content.questionnaire_questions.sort_by{|p| p.order}, :locals => { :qc_id => q_content.id }
+            = render :partial => 'question', :collection => q_content.questionnaire_questions.sort_by{|q| q.order}, :locals => { :qc_id => q_content.id }
             #add-question
               = link_to_function "Add Question" do |page|
                 - page.insert_html :bottom, :questions, :partial => 'question', :object => QuestionnaireQuestion.new, :locals => { :qc_id => q_content.id }

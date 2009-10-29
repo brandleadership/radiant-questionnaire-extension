@@ -67,7 +67,7 @@ module QuestionnaireTags
   tag 'questionnaire:questions:each' do |tag|
     result = []
     questionnaire_content = tag.locals.questionnaire_content
-    questionnaire_content.questionnaire_questions.each do |question|
+    questionnaire_content.questionnaire_questions.sort_by{|q| q.order}.each do |question|
       tag.locals.question = question
       result << tag.expand
     end

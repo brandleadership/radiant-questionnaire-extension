@@ -15,6 +15,7 @@
 .question {
   float: left;
   border-bottom: 1px solid gray;
+  padding: 10px 0 20px 0;
 }
 
 .question label {
@@ -36,6 +37,15 @@
 
 .question select {
   float: left;
+  margin-left: 30px;
+}
+
+.optional_label {
+ margin-left: 30px;
+}
+
+.comment_label {
+ margin-left: 30px;
 }
 
 .question a {
@@ -63,11 +73,36 @@
   float: left
 }
 
-.data, .remove, .answers, .answer, #add-question, .buttons {
+.question .remove a, .answer a {
+  display: block;
+  background-image:url(/images/admin/remove-answer.png);
+  padding-left: 15px;
+  color:black;
+  font-size:12px;
+  text-decoration:none;
   float: left;
-  width: 95%;
 }
 
+a.move-up {
+  background-image:url(/images/admin/move_higher.png);
+  padding-left: 20px;
+  margin-left: 30px;
+}
+
+a.move-down {
+ background-image:url(/images/admin/move_lower.png);
+ padding-left: 20px;
+ margin-left: 10px;
+}
+
+.data, .remove, .answers, .answer, #add-question, .buttons {
+  float: left;
+  width: 100%;
+}
+
+.remove {
+ margin-bottom: 10px;
+}
 .move-up {
   float: left;
 }
@@ -78,4 +113,39 @@ div.answer {
 
 div.hide {
   display: none;
+}
+
+.answers a {
+ display: none;
+}
+
+.answers .answer a {
+  display: block;
+}
+
+.answers a.show {
+  display: block;
+}
+
+.answer a {
+  margin-left: 30px;
+}
+
+#add-question {
+  margin-top: 10px;
+}
+
+* html .answer label {
+  float: left;
+}
+
+* html .answer {
+  margin-left: 0;
+  padding: 0;
+}
+
+* html .answer textarea {
+  margin-left: 0;
+  padding: 0;
+  float: left;
 }

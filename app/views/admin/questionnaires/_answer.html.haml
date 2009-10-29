@@ -7,7 +7,7 @@
       = answer_child_form.hidden_field :id, :index => nil
     = answer_child_form.text_area :answer, :index => nil
     - if answer.new_record?
-      = link_to_function "Remove Answer", "if(removeCheck('answer')){$(this).up('p.content').remove();}else{return false;}"
+      = link_to_function "Remove Answer", "if(removeCheck('answer')){$(this).up('div.answer').remove();}else{return false;}"
     - else
       = link_to_function "Remove Answer", "if(removeCheck('answer')){markForDestroyAnswer(this)}else{return false;}"
       = answer_child_form.hidden_field :should_destroy, :index => nil, :value => 0, :class => 'should-destroy'

@@ -3,7 +3,7 @@
     .data
       = question_child_form.hidden_field :questionnaire_content_id, :value => qc_id , :index => nil
       = question_child_form.hidden_field :new_data_id, :index => nil
-      = question_child_form.hidden_field :order, :index => nil
+      = question_child_form.hidden_field :order, { :index => nil, :class => 'order-input' }
       %label.title Question
       - if question.new_record?
         - answer_div_id = 'answers-new-0'
@@ -11,12 +11,13 @@
         = question_child_form.hidden_field :id, :index => nil
         - answer_div_id = 'answers-' + question.id.to_s
       = question_child_form.text_area :question, :index => nil
-      = question_child_form.select :questionnaire_question_type_id, QuestionnaireQuestionType.find(:all).collect{|g| [g.name, g.id]}.unshift(['None', nil]), {}, { :index => nil, :onchange => "if(this.value == '2' || this.value == '3'){ $(this).up('div.data').next('div.answers').removeClassName('hide'); $(this).up('div.data').next('div.remove').removeClassName('hide'); }else{ $(this).up('div.data').next('div.answers').addClassName('hide'); $(this).up('div.data').next('div.remove').addClassName('hide');$A($(this).up('div.data').next('div.answers').getElementsByClassName('answer')).each(Element.remove); }" }
+      = question_child_form.select :questionnaire_question_type_id, QuestionnaireQuestionType.find(:all).collect{|g| [g.name, g.id]}.unshift(['None', nil]), {}, { :index => nil, :onchange => "if(this.value == '2' || this.value == '3'){ $(this).up('div.data').next('div.answers').down('a').addClassName('show'); }else{ $(this).up('div.data').next('div.answers').down('a').removeClassName('show'); $A($(this).up('div.data').next('div.answers').getElementsByClassName('answer')).each(Element.remove); }" }
       %label.optional_label optional
       = question_child_form.check_box :optional, {:index => nil,  :class => 'optional_checkbox checkbox_checker' }, 1, 0
       %label.comment_label comment
       = question_child_form.check_box :comment, {:index => nil,  :class => 'comment_checkbox checkbox_checker' }, 1 ,0
-      = '<a href="#" class="move-up" />UP</a>'
+      = '<a href="#" class="move-up" />Up</a>'
+      = '<a href="#" class="move-down"/>Down</a>'
     %div.remove
       - if question.new_record?
         = link_to_function "Remove Question", "if(removeCheck('question')){$(this).up('div.question').remove();}else{return false;}"

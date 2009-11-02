@@ -27,6 +27,6 @@
     %div.answers{:id => answer_div_id}
       = render :partial => 'answer', :collection => question.questionnaire_answers, :locals => { :qq_id => question.id }
       = link_to_function "Add Answer" do |page|
-        - page.insert_html :bottom, answer_div_id, :partial => 'answer', :object => question.questionnaire_answers.build, :locals => { :qq_id => question.id }
+        - page.insert_answer :partial => 'answer', :object => question.questionnaire_answers.build, :locals => { :qq_id => question.id }
         - page << "$$('.new-data').each( function(s) { s.writeAttribute('value', s.up().up().up().childElements()[0].childElements()[1].readAttribute('value')); });"
         - page << "var addAnswer = $(this);$(this).up('div').insert(addAnswer);"

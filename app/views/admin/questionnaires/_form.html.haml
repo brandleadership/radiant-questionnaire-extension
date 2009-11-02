@@ -41,8 +41,9 @@
               = link_to_function "Add Question" do |page|
                 - page.insert_html :bottom, :questions, :partial => 'question', :object => QuestionnaireQuestion.new, :locals => { :qc_id => q_content.id }
                 - page << "newQuestion = $('questions').childElements().last().childElements().last().childElements().last();"
-                - page << "if( $('answers-new-0') != null) { $('answers-new-0').id = 'answer-' + newQuestionCounter;"
-                - page << "newQuestion.writeAttribute('onClick',newQuestion.readAttribute('onClick').sub('answers-new-0', 'answer-' + newQuestionCounter));"
+                - page << "if( $('answers-new-0') != null ) { $('answers-new-0').id = 'answer-' + newQuestionCounter;"
+                - page << "newOnClick = newQuestion.readAttribute('onclick').sub('answers-new-0', 'answer-' + newQuestionCounter);"
+                - page << "newQuestion.writeAttribute('onClick', newOnClick);"
                 - page << "$('questions').childElements().last().childElements().first().childElements()[1].writeAttribute('value', newQuestionCounter);"
                 - page << "newQuestionCounter++;"
                 - page << "var addQuestion = $('add-question'); $('add-question').remove(); $('questions').insert(addQuestion); }"

@@ -116,4 +116,9 @@ module Admin::QuestionnairesHelper
       end
     end
   end
+
+  def insert_answer(*options_for_render)
+    content = javascript_object_for(render(*options_for_render))
+    record "Element.insert($(this).up('.answers'), {bottom: #{content} });"
+  end
 end

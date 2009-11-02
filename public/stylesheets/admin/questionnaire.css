@@ -139,9 +139,12 @@ div.hide {
   float: left;
 }
 
-* html .answer {
-  margin-left: 0;
-  padding: 0;
+* html div.answer {
+    margin-left: 100px;
+}
+
+* html div.answer textarea {
+    margin-left: -100px;
 }
 
 * html .answer textarea {
@@ -149,3 +152,4 @@ div.hide {
   padding: 0;
   float: left;
 }
+

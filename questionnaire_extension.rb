@@ -26,9 +26,4 @@ class QuestionnaireExtension < Radiant::Extension
 
     admin.page.edit.add :parts_bottom, "questionnaire", :after => 'edit_layout_and_type' 
   end
-  
-  def deactivate
-     admin.tabs.remove "Questionnaire"
-  end
-  
 end
